@@ -18,10 +18,17 @@ import EndGame from './component/EndGame';
 class App extends Component {
   render() {
     return (
-      <GApp>
+      <GApp
+        centered={true}
+      >
         <Article>
           <Header
             size='small'
+            colorIndex='grey-4'
+            full='horizontal'
+            style={{
+              paddingLeft: '5px'
+            }}
           >
             <Title>Battleboats!</Title>
           </Header>

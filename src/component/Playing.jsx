@@ -1,5 +1,6 @@
 import React from 'react';
 import Board from './Board';
+import Box from 'grommet/components/Box';
 
 class Playing extends React.Component {
   constructor(props) {
@@ -27,7 +28,15 @@ class Playing extends React.Component {
     const activePlayer = game.players.find(p => p.id === game.activePlayer);
     const otherPlayer = game.players.find(p => p.id !== game.activePlayer);
     return (
-      <div>
+      <Box
+        flex='false'
+        full='horizontal'
+        pad='medium'
+        basis='full'
+        alignContent='center'
+        justify='center'
+        align='center'
+      >
         <h1>Make Your Move!</h1>
         <p>Enemy Zone</p>
         <Board
@@ -41,7 +50,7 @@ class Playing extends React.Component {
           revealAll={true}
           onClick={this.handleOwnZoneClick}
         />
-      </div>
+      </Box>
     );
   }
 }
