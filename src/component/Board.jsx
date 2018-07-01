@@ -1,10 +1,9 @@
 import React from 'react';
-import Konva from 'konva';
 import { Stage, Layer, Rect } from 'react-konva';
 import { XMax, YMax } from '../game/Game';
 
-const TileSize = 20; // px
-const TileSpacing = 25; // px
+const TileSize = 30; // px
+const TileSpacing = 33; // px
 const TileOutlineWidth = 1; // px
 
 const BGColor = 'DeepSkyBlue';
@@ -14,35 +13,40 @@ const SunkColor = 'DarkRed';
 const HiddenColor = 'DarkGray';
 const OutlineColor = 'Black';
 
+// TODO: Make it so that tiles of the same ship are joined
+
 class Board extends React.Component {
 
   render() {
     // calculate ship locations and colors
+    // -- potential optimization: only do this
+    // -- if the tile would be revealed.
     const ships = [];
     this.props.player.ships.forEach(ship => {
       ship.tiles.forEach(tile => {
+        const coords = {
+          x: ship.location.x + tile.x,
+          y: ship.location.y + tile.y,
+        };
         if(!ship.alive) {
           ships.push({
-            x: ship.location.x + tile.x,
-            y: ship.location.y + tile.y,
+            ...coords,
             color: SunkColor,
           })
         } else if(tile.hit) {
           ships.push({
-            x: ship.location.x + tile.x,
-            y: ship.location.y + tile.y,
+            ...coords,
             color: HitColor,
           });
         } else {
           ships.push({
-            x: ship.location.x + tile.x,
-            y: ship.location.y + tile.y,
+            ...coords,
             color: ShipColor,
           });
         }
       });
     });
-    
+
     // create the actual tiles to be rendered
     const tiles = [];
     for(let x = 0; x <= XMax; x++) {
@@ -71,6 +75,8 @@ class Board extends React.Component {
         );
       }
     }
+    // NB. This ends up creating 2 canvas elements,
+    // one to display and one that detects input.
     return (
       <Stage
         width={TileSpacing * (XMax + 1)}
