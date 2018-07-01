@@ -29,8 +29,8 @@ import Ship, { Shapes } from './Ship';
 
 // constants and config
 
-const XMax = 7;
-const YMax = 7;
+export const XMax = 7;
+export const YMax = 7;
 
 const firstPlayer = 1;
 
@@ -59,6 +59,7 @@ class Game {
     const player1 = {
       id: 1,
       ships: [],
+      revealedTiles: [], // that the opponent can see
     }
 
     const player1Ships = [
@@ -75,6 +76,7 @@ class Game {
     const player2 = {
       id: 2,
       ships: [],
+      revealedTiles: [],
     }
 
     const player2Ships = [
@@ -122,6 +124,7 @@ class Game {
       hit: false,
       sunk: false,
     }
+    shotPlayer.revealedTiles.push({ x: atLocation.x, y: atLocation.y });
     shotPlayer.ships.forEach(ship => {
       ship.tiles.forEach(tile => {
         if((atLocation.x === ship.location.x + tile.x)
@@ -136,7 +139,7 @@ class Game {
       });
     });
     if(result.hit) {
-      if(shotPlayer.ships.every(t => !t.alive)) {
+      if(shotPlayer.ships.every(t => !t.alive)) {      
         this.moves.push(result);
         this.unsafeSetState(States.EndGame, this.activePlayer);
         return result;
