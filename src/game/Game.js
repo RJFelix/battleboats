@@ -67,6 +67,8 @@ class Game {
    * Set up a new game. Intended for internal use only!
    */
   _setup() {
+    window.localStorage.clear(localStorageKey);
+    this.hasSavedGame = false;
 
     this.moves = [];
 
@@ -193,7 +195,7 @@ class Game {
   finish() {
     this._setup();
     this.unsafeSetState(States.Lobby, null);
-    window.localStorage.clear(localStorageKey);
+
   }
 
   /**
