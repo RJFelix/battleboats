@@ -73,6 +73,7 @@ class Ship {
     // Set them all to un-hit
     this.tiles = this.tiles.map(t => ({...t, hit: false}));
     this.alive = true;
+    this.shape = shape;
 
   }
 
