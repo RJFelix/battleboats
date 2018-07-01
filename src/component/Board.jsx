@@ -54,7 +54,7 @@ class Board extends React.Component {
         let color = HiddenColor;
         // should this tile be revealed? if so, set color appropriately
         if(this.props.revealAll || this.props.player.revealedTiles.some(location => location.x === x && location.y === y)) {
-          const ship = ships.find(s => s.x === x && s.y == y);
+          const ship = ships.find(s => s.x === x && s.y === y);
           if(ship) {
             color = ship.color;
           } else {
@@ -63,6 +63,7 @@ class Board extends React.Component {
         }
         tiles.push(
           <Rect
+            key={`${x},${y}`}
             x={x * TileSpacing}
             y={y * TileSpacing}
             width={TileSize}
