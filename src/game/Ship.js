@@ -50,14 +50,40 @@ class Ship {
         break;
       }
       case Shapes.El: {
-        // TODO: generate the 4 possible rotations
-        // this is temporarily just the upright L
-        this.tiles = [
-          { x: 0, y: 0 },
-          { x: 0, y: 1 },
-          { x: 0, y: 2 },
-          { x: 1, y: 2 },
-        ];
+        const rand = randomInt(4);  
+        if(rand === 0) {
+          // pointing up
+          this.tiles = [
+            { x: 0, y: 0 },
+            { x: 0, y: 1 },
+            { x: 0, y: 2 },
+            { x: 1, y: 2 },
+          ];
+        } else if(rand === 1) {
+          // pointing right 
+          this.tiles = [
+            { x: 0, y: 0 },
+            { x: 0, y: 1 },
+            { x: 1, y: 0 },
+            { x: 2, y: 0 },
+          ];
+        } else if(rand === 2) {
+          // pointing down
+          this.tiles = [
+            { x: 0, y: 0 },
+            { x: 1, y: 0 },
+            { x: 1, y: 1 },
+            { x: 1, y: 2 },
+          ];
+        } else {
+          // pointing left
+          this.tiles = [
+            { x: 2, y: 0 },
+            { x: 0, y: 1 },
+            { x: 1, y: 1 },
+            { x: 2, y: 1 },
+          ];
+        }
         break;
       }
       default: {
