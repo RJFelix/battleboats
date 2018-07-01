@@ -32,6 +32,8 @@ import Ship, { Shapes } from './Ship';
 const XMax = 7;
 const YMax = 7;
 
+const firstPlayer = 1;
+
 const _States = {
   Lobby: "LOBBY",
   BeginTurn: "BEGIN_TURN",
@@ -43,8 +45,9 @@ export const States = Object.freeze(_States);
 
 class Game {
   state = States.Lobby;
-  players = []
-  moves = []
+  players = [];
+  moves = [];
+  stateChangeListeners = [];
 
   constructor() {
 
@@ -94,15 +97,14 @@ class Game {
    */
   beginGame() {
     this._setup();
-    this.state = States.BeginTurn;
-    this.activePlayer = 1;
+    this.unsafeSetState(States.BeginTurn, firstPlayer);
   }
 
   /**
    * Begin a turn. The next state will be Playing.
    */
   play() {
-    this.state = States.Playing;
+    this.unsafeSetState(States.Playing, this.activePlayer);
   }
 
   /**
@@ -135,12 +137,11 @@ class Game {
     });
     if(result.hit) {
       if(shotPlayer.ships.every(t => !t.alive)) {
-        this.state = States.EndGame;
+        this.unsafeSetState(States.EndGame, null);
         return result;
       }
     }
-    this.activePlayer = shotPlayer.id;
-    this.state = States.BeginTurn;
+    this.unsafeSetState(States.BeginTurn, shotPlayer.id);
     return result;
   }
 
@@ -149,7 +150,7 @@ class Game {
    * The next state will be Lobby.
    */
   returnToLobby() {
-    this.state = States.Lobby;
+    this.unsafeSetState(States.Lobby, null)
   }
 
   /**
@@ -157,19 +158,28 @@ class Game {
    */
   finish() {
     this._setup();
-    this.state = States.Lobby;
+    this.unsafeSetState(States.Lobby, null);
+  }
+
+  /**
+   * Register a listener for state changes
+   * @param {function} fn 
+   */
+  onStateChange(fn) {
+    this.stateChangeListeners.push(() => fn(this.state, this.activePlayer));
   }
 
   /**
    * UNSAFELY set the game state.
    * Using this will probably break the game.
-   * Intended for testing use.
+   * Intended for internal and testing use.
    * @param {@link States} state 
    * @param {number} activePlayer
    */
   unsafeSetState(state, activePlayer) {
     this.activePlayer = activePlayer;
     this.state = state;
+    this.stateChangeListeners.map(fn => fn());
   }
 
 }
