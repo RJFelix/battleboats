@@ -43,6 +43,14 @@ const _States = {
 
 export const States = Object.freeze(_States);
 
+const ShipTexts = {
+  [Shapes.El]: 'the El-Boat',
+  [Shapes.Line]: 'a Canoe',
+  [Shapes.Square]: 'the Party Raft',
+}
+
+const shipText = shape => ShipTexts[shape];
+
 class Game {
   state = States.Lobby;
   players = [];
@@ -134,6 +142,7 @@ class Game {
           if(ship.tiles.every(t => t.hit)) {
             ship.alive = false;
             result.sunk = true;
+            result.sunkDescription = shipText(ship.shape);
           }
         }
       });
