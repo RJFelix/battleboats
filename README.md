@@ -36,3 +36,7 @@ Many things are tested, though test coverage can always be improved.
 ## Building
 
 `npm run build` will produce a build artifact in the `/build` directory.
+
+## Deploying to GitHub Pages
+
+This project can be automatically deployed to GitHub Pages. In `package.json`, change `homepage` to your fork's GitHub Pages homepage. Then run `npm run deploy`.
