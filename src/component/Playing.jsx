@@ -7,19 +7,22 @@ class Playing extends React.Component {
       x: 0,
       y: 0,
     };
+    this.handleXChange = this.handleXChange.bind(this);
+    this.handleYChange = this.handleYChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleXChange(e) {
     e.stopPropagation();
     this.setState({
-      x: e.value,
+      x: parseInt(e.target.value, 10),
     });
   }
 
   handleYChange(e) {
     e.stopPropagation();
     this.setState({
-      y: e.value,
+      y: parseInt(e.target.value, 10),
     });
   }
 

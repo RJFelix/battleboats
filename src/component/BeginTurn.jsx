@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BeginTurn = game => (
+const BeginTurn = ({game}) => (
   <div>
     <h1>Player {game.activePlayer}'s Turn!</h1>
     <button onClick={() =>

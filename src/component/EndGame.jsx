@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EndGame = game => (
+const EndGame = ({game}) => (
   <div>
     <h1>Game Over</h1>
     <p>Player ${game.activePlayer} won.</p>

@@ -49,10 +49,6 @@ class Game {
   moves = [];
   stateChangeListeners = [];
 
-  constructor() {
-
-  }
-
   /**
    * Set up a new game. Intended for internal use only!
    */
@@ -118,8 +114,9 @@ class Game {
    * @param {number} atLocation.y
    */
   shoot(atId, atLocation) {
-    const shotPlayer = this.players.find(p => p.id == atId);
+    const shotPlayer = this.players.find(p => p.id === atId);
     const result = {
+      target: atId,
       x: atLocation.x,
       y: atLocation.y,
       hit: false,

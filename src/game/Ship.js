@@ -7,8 +7,6 @@ const _Shapes = {
   Line: 3,
 }
 
-const ShipPlacementTriesLimit = 200;
-
 export const Shapes = Object.freeze(_Shapes);
 
 const randomInt = max => Math.floor(Math.random() * Math.floor(max));
@@ -123,7 +121,7 @@ class Ship {
         let collides = false;
         this.tiles.forEach(tile => {
           occupiedLocations.forEach(({x, y}) => {
-            if((proposedX + tile.x == x) && (proposedY + tile.y == y)) {
+            if((proposedX + tile.x === x) && (proposedY + tile.y === y)) {
               collides = true;
             }
           });
