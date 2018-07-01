@@ -5,6 +5,7 @@ class GameWrapper extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleStateChange = this.handleStateChange.bind(this);
     this.game = new Game();
     this.game.onStateChange(this.handleStateChange);
     this.lobbyComponent = props.lobby;
@@ -15,7 +16,6 @@ class GameWrapper extends React.Component {
       gameState: this.game.state,
       activePlayer: null,
     }
-    this.handleStateChange = this.handleStateChange.bind(this);
   }
 
   handleStateChange(newGameState, activePlayer) {
@@ -39,10 +39,13 @@ class GameWrapper extends React.Component {
       case States.EndGame:
         const EndGame = this.props.endGame;
         return <EndGame game={this.game} />;
+      default:
+        return <div><p>An error occurred, oh no!</p></div>
     }
   }
 
   render() {
+    console.log(this.game);
     return (
       <div>
         <h1>State: {this.state.gameState}</h1>
