@@ -14,6 +14,10 @@ export const Shapes = Object.freeze(_Shapes);
 const randomInt = max => Math.floor(Math.random() * Math.floor(max));
 
 class Ship {
+  /**
+   * Create a ship.
+   * @param {@link Shapes} shape 
+   */
   constructor(shape) {
     // TODO: probably extract these out
     // to separate concerns (logic vs. constants)
@@ -74,9 +78,12 @@ class Ship {
 
   }
 
-  // Given a list of ships and board parameters,
-  // place this ship in a valid location,
-  // then return the list including this one.
+  /**
+   * Place a ship in a valid location.
+   * @param {[@link Ship]} ships - ships that have already been placed
+   * @param {number} xMax - the max x extent of the game board
+   * @param {number} yMax - the max y extent of the game board
+   */
   place(ships, xMax, yMax) {
     // do some setup
     const { xExtent, yExtent } = this.tiles.reduce((acc, tile) => {
