@@ -57,6 +57,9 @@ class Game {
    * Set up a new game. Intended for internal use only!
    */
   _setup() {
+
+    this.moves = [];
+    
     const player1 = {
       id: 1,
       ships: [],
@@ -137,10 +140,12 @@ class Game {
     });
     if(result.hit) {
       if(shotPlayer.ships.every(t => !t.alive)) {
+        this.moves.push(result);
         this.unsafeSetState(States.EndGame, null);
         return result;
       }
     }
+    this.moves.push(result);
     this.unsafeSetState(States.BeginTurn, shotPlayer.id);
     return result;
   }
