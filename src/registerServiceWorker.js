@@ -1,3 +1,5 @@
+// Note from Ryan - this is create-react-app's code, not mine!
+
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
