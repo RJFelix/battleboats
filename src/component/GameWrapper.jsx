@@ -48,8 +48,6 @@ class GameWrapper extends React.Component {
     console.log(this.game);
     return (
       <div>
-        <h1>State: {this.state.gameState}</h1>
-        <h2>Active Player: {this.state.activePlayer}</h2>
         {this.getComponentToRender()}
       </div>
     );

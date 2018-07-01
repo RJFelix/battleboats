@@ -8,25 +8,8 @@ class Playing extends React.Component {
       x: 0,
       y: 0,
     };
-    this.handleXChange = this.handleXChange.bind(this);
-    this.handleYChange = this.handleYChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleOwnZoneClick = this.handleOwnZoneClick.bind(this);
     this.handleEnemyZoneClick = this.handleEnemyZoneClick.bind(this);
-  }
-
-  handleXChange(e) {
-    e.stopPropagation();
-    this.setState({
-      x: parseInt(e.target.value, 10),
-    });
-  }
-
-  handleYChange(e) {
-    e.stopPropagation();
-    this.setState({
-      y: parseInt(e.target.value, 10),
-    });
   }
 
   handleOwnZoneClick() {
@@ -37,12 +20,6 @@ class Playing extends React.Component {
   handleEnemyZoneClick(coords) {
     const shootAt = this.props.game.activePlayer === 1 ? 2 : 1;
     this.props.game.shoot(shootAt, coords);
-  }
-
-  handleSubmit(e) {
-    e.stopPropagation();
-    const shootAt = this.props.game.activePlayer === 1 ? 2 : 1;
-    this.props.game.shoot(shootAt, this.state);
   }
 
   render() {
@@ -64,10 +41,6 @@ class Playing extends React.Component {
           revealAll={true}
           onClick={this.handleOwnZoneClick}
         />
-        <p>Shoot at...</p>
-        <input type='number' onChange={this.handleXChange} />
-        <input type='number' onChange={this.handleYChange} />
-        <button onClick={this.handleSubmit}>Fire!</button>
       </div>
     );
   }
