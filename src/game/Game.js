@@ -172,6 +172,8 @@ class Game {
     if(result.hit) {
       if(shotPlayer.ships.every(t => !t.alive)) {      
         this.moves.push(result);
+        window.localStorage.clear(localStorageKey);
+        this.hasSavedGame = false;
         this.unsafeSetState(States.EndGame, this.activePlayer);
         return result;
       }
