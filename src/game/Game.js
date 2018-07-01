@@ -59,7 +59,7 @@ class Game {
   _setup() {
 
     this.moves = [];
-    
+
     const player1 = {
       id: 1,
       ships: [],
@@ -141,7 +141,7 @@ class Game {
     if(result.hit) {
       if(shotPlayer.ships.every(t => !t.alive)) {
         this.moves.push(result);
-        this.unsafeSetState(States.EndGame, null);
+        this.unsafeSetState(States.EndGame, this.activePlayer);
         return result;
       }
     }
