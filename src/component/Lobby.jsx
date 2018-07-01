@@ -7,6 +7,11 @@ const Lobby = ({ game }) => {
     <button onClick={
       () => game.beginGame()
     }>Start!</button>
+    {game.hasSavedGame &&
+    <button onClick={
+      () => game.continueGame()
+    }>Continue Saved Game</button>
+    }
   </div>
   );
 }

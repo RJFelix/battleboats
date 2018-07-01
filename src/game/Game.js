@@ -32,6 +32,8 @@ import Ship, { Shapes } from './Ship';
 export const XMax = 7;
 export const YMax = 7;
 
+const localStorageKey = 'game';
+
 const firstPlayer = 1;
 
 const _States = {
@@ -56,6 +58,10 @@ class Game {
   players = [];
   moves = [];
   stateChangeListeners = [];
+
+  constructor() {
+    this.hasSavedGame = window.localStorage.getItem(localStorageKey) ? true : false;
+  }
 
   /**
    * Set up a new game. Intended for internal use only!
@@ -107,6 +113,20 @@ class Game {
   beginGame() {
     this._setup();
     this.unsafeSetState(States.BeginTurn, firstPlayer);
+  }
+
+  continueGame() {
+    let savedState = window.localStorage.getItem(localStorageKey);
+    try {
+      savedState = JSON.parse(savedState);
+      this.moves = savedState.moves;
+      this.players = savedState.players;
+      this.activePlayer = savedState.activePlayer;
+    } catch (e) {
+      console.log('Saved game was corrupted. Starting new game.')
+      this._setup();
+    }
+    this.unsafeSetState(States.BeginTurn, this.activePlayer ? this.activePlayer : firstPlayer);
   }
 
   /**
@@ -173,6 +193,7 @@ class Game {
   finish() {
     this._setup();
     this.unsafeSetState(States.Lobby, null);
+    window.localStorage.clear(localStorageKey);
   }
 
   /**
@@ -191,6 +212,11 @@ class Game {
    * @param {number} activePlayer
    */
   unsafeSetState(state, activePlayer) {
+    window.localStorage.setItem(localStorageKey, JSON.stringify({
+      moves: this.moves,
+      players: this.players,
+      activePlayer: this.activePlayer,
+    }));
     this.activePlayer = activePlayer;
     this.state = state;
     this.stateChangeListeners.map(fn => fn());
